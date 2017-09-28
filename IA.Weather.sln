@@ -17,7 +17,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API", "src\IA.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.SelfHost", "src\IA.Weather.API.SelfHost\IA.Weather.API.SelfHost.csproj", "{B8BBEECF-4465-41E8-8F41-BAFA66684B7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Web", "..\src\IA.Weather\IA.Weather.Web\IA.Weather.Web.csproj", "{AAE5799D-0B40-421E-AB0A-05D9A6480516}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Web", "src\IA.Weather.Web\IA.Weather.Web.csproj", "{AAE5799D-0B40-421E-AB0A-05D9A6480516}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.WebHost", "src\IA.Weather.API.WebHost\IA.Weather.API.WebHost.csproj", "{46CD8012-3486-4A59-9DF7-5FFC723613DE}"
 EndProject
