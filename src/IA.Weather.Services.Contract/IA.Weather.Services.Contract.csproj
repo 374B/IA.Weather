@@ -40,8 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEchoService.cs" />
+    <Compile Include="Interfaces\IWeatherService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IA.Weather.Domain\IA.Weather.Domain.csproj">
+      <Project>{f48de805-3a5a-42e4-b9fe-6fca2f37a1ca}</Project>
+      <Name>IA.Weather.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
