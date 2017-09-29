@@ -1,24 +1,16 @@
-﻿using System;
-using System.Threading.Tasks;
-
-namespace IA.Weather.Services.WeatherService
+﻿namespace IA.Weather.Services.WeatherService
 {
-    public class WeatherServiceX : WeatherServiceBase<WeatherProviderX, SomeResult>
+    public class WeatherServiceX : WeatherServiceBase
     {
         public override string Identifier => "X";
         public override string Name => "Webservicex.net";
         public override string Description => "Weather Served from Webservicex.net";
 
-        public WeatherServiceX(WeatherProviderX provider) : base(provider)
+        public WeatherServiceX(IWeatherProviderX provider) : base(provider)
         {
         }
     }
 
-    public class WeatherProviderX : IWeatherProvider<SomeResult>
-    {
-      public Task<SomeResult> GetWeatherResponse(WeatherRequest request)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    public interface IWeatherProviderX : IWeatherProvider { }
+
 }

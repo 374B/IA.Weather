@@ -7,18 +7,15 @@ using IA.Weather.Services.Contract.Interfaces;
 
 namespace IA.Weather.Services.WeatherService
 {
-    public class SomeResult { }
-
-    public abstract class WeatherServiceBase<TWeatherProvider, TWeatherProviderResult> : IWeatherService
-        where TWeatherProvider : IWeatherProvider<TWeatherProviderResult>
+    public abstract class WeatherServiceBase : IWeatherService
     {
-        private readonly TWeatherProvider _provider;
+        private readonly IWeatherProvider _provider;
 
         public abstract string Identifier { get; }
         public abstract string Name { get; }
         public abstract string Description { get; }
 
-        protected WeatherServiceBase(TWeatherProvider provider)
+        protected WeatherServiceBase(IWeatherProvider provider)
         {
             _provider = provider;
         }
@@ -30,9 +27,7 @@ namespace IA.Weather.Services.WeatherService
 
             try
             {
-                var result = await _provider.GetWeatherResponse(req);
-                //model = _mapper.Map(result);
-                model = null;
+                model = await _provider.GetWeatherResponse(req);
             }
             catch (Exception ex)
             {
@@ -50,8 +45,6 @@ namespace IA.Weather.Services.WeatherService
             return results.ToList();
         }
 
-        //protected abstract WeatherModel MapResult(TWeatherProviderResult result);
-
     }
 
     public class WeatherResponse
@@ -64,9 +57,9 @@ namespace IA.Weather.Services.WeatherService
 
     }
 
-    public interface IWeatherProvider<TResponse>
+    public interface IWeatherProvider
     {
-        Task<TResponse> GetWeatherResponse(WeatherRequest request);
+        Task<WeatherModel> GetWeatherResponse(WeatherRequest request);
     }
 
 }

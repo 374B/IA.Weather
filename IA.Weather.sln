@@ -34,6 +34,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Domain", "4. Domain", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Domain", "src\IA.Weather.Domain\IA.Weather.Domain.csproj", "{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Services.Test", "IA.Weather.Services.Test\IA.Weather.Services.Test.csproj", "{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +74,10 @@ Global
 		{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{9080F920-1268-41DD-B4E2-F9B0476C5316} = {E222DBA4-A330-424C-9944-14B3AA07A3FA}
 		{DB1D6A33-183F-4206-8ED1-5EC74FFDAF42} = {E222DBA4-A330-424C-9944-14B3AA07A3FA}
 		{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA} = {9B5877D3-9730-4307-8B72-E39C42B2BD77}
+		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A} = {B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4649D2BC-06AB-4E7D-BD81-8EE9EFE83538}

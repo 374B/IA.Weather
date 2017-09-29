@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Threading.Tasks;
+using IA.Weather.Domain.Models;
 
 namespace IA.Weather.Services.WeatherService
 {
-    public class WeatherServicePhilly : WeatherServiceBase<WeatherProviderAlwaysSunnyInPhiladelphia, SomeResult>
+    public class WeatherServicePhilly : WeatherServiceBase
     {
         public override string Identifier => "PHI";
         public override string Name => "Always Sunny In Philadelphia";
         public override string Description => "The Weather is always sunny in Philadelphia";
 
-        public WeatherServicePhilly(WeatherProviderAlwaysSunnyInPhiladelphia provider) : base(provider)
+        public WeatherServicePhilly(IWeatherProviderPhilly provider) : base(provider)
         {
         }
     }
 
-    public class WeatherProviderAlwaysSunnyInPhiladelphia : IWeatherProvider<SomeResult>
-    {
-        public string Name => "Always Sunny In Philadelphia";
+    public interface IWeatherProviderPhilly : IWeatherProvider { }
 
-        public Task<SomeResult> GetWeatherResponse(WeatherRequest request)
+    public class WeatherProviderPhilly : IWeatherProviderPhilly
+    {
+        public Task<WeatherModel> GetWeatherResponse(WeatherRequest request)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(WeatherModel.New("Sunny"));
         }
     }
 }

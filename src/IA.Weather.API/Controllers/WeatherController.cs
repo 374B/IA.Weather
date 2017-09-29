@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using IA.Weather.Domain.Models;
 using IA.Weather.Services.Contract.Interfaces;
 
 namespace IA.Weather.API.Controllers
@@ -29,7 +32,7 @@ namespace IA.Weather.API.Controllers
                 Name = x.Name,
                 Description = x.Description
             })
-            .ToList();
+                .ToList();
 
             //I also generally prefer to have a parent object, as this is more open to non-breaking modifications in the future
             //... If this was production code you would be writing DTO classes or Response classes 
@@ -46,5 +49,68 @@ namespace IA.Weather.API.Controllers
 
             return Ok(responseObj);
         }
+
+        [HttpGet]
+        [Route("services/weather")]
+        public async Task<IHttpActionResult> WeatherFromService([FromUri] string country, [FromUri] string city)
+        {
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(country));
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(city));
+
+            var tasks = _weatherServices.Select(x =>
+           {
+               return new Func<Task<KeyValuePair<string, WeatherModel>>>(async () =>
+                {
+                    var result = await x.GetByCountry(country);
+                    return new KeyValuePair<string, WeatherModel>(x.Identifier, result);
+                })();
+           });
+
+            try
+            {
+                var results = await Task.WhenAll(tasks);
+                var responseObj = new
+                {
+                    Results = results.Select(x => new
+                    {
+                        x.Key,
+                        x.Value.Weather
+                    })
+                };
+
+                return Ok(responseObj);
+
+            }
+            catch (Exception ex)
+            {
+                //TODO
+                throw;
+            }
+        }
+
+        [HttpGet]
+        [Route("services/{service}/weather")]
+        public async Task<IHttpActionResult> WeatherFromService([FromUri]string service, [FromUri] string country, [FromUri] string city)
+        {
+            if (string.IsNullOrWhiteSpace(service)) throw new ArgumentNullException(nameof(service));
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(country));
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(city));
+
+            var targetService = _weatherServices.FirstOrDefault(x => x.Identifier.Equals(service, StringComparison.OrdinalIgnoreCase));
+            if (targetService == null) return BadRequest($"Could not find a service matching the specified service identifier '{service}'");
+
+            try
+            {
+                var model = await targetService.GetByCountry(country);
+                return Ok(model.Weather);
+            }
+            catch (Exception ex)
+            {
+                //TODO
+                throw;
+            }
+
+        }
     }
 }
+

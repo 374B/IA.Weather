@@ -99,6 +99,10 @@
       <Project>{DB1D6A33-183F-4206-8ED1-5EC74FFDAF42}</Project>
       <Name>IA.Weather.Services.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IA.Weather.Domain\IA.Weather.Domain.csproj">
+      <Project>{f48de805-3a5a-42e4-b9fe-6fca2f37a1ca}</Project>
+      <Name>IA.Weather.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
