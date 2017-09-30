@@ -4,12 +4,12 @@ using IA.Weather.Services.WeatherService;
 
 namespace IA.Weather.Services.Providers
 {
-    public class WeatherProviderX : HttpWeatherProvider, IWeatherProviderX
+    public class WeatherProviderX : WeatherProviderHttp, IWeatherProviderX
     {
         protected override HttpRequestMessage CreateRequest()
         {
             var req = new HttpRequestMessage(
-                HttpMethod.Get, 
+                HttpMethod.Get,
                 "http://www.webservicex.net/globalweather.asmx/GetWeather?CityName=Sydney&CountryName=Australia");
 
             return req;

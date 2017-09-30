@@ -6,7 +6,7 @@ using IA.Weather.Services.WeatherService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace IA.Weather.Services.Test
+namespace IA.Weather.Services.Test.Tests
 {
     [TestClass]
     public class WeatherServiceTest

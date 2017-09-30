@@ -6,7 +6,7 @@ using IA.Weather.Services.WeatherService;
 
 namespace IA.Weather.Services.Providers
 {
-    public abstract class HttpWeatherProvider : IWeatherProvider
+    public abstract class WeatherProviderHttp : IWeatherProvider
     {
         protected abstract HttpRequestMessage CreateRequest();
 

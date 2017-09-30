@@ -7,6 +7,7 @@ using IA.Weather.Services.Contract.Interfaces;
 
 namespace IA.Weather.Services.WeatherService
 {
+    //TODO: Tidy up the classes at the bottom
     public abstract class WeatherServiceBase : IWeatherService
     {
         private readonly IWeatherProvider _provider;

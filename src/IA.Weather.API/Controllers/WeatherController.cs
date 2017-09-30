@@ -32,7 +32,10 @@ namespace IA.Weather.API.Controllers
                 Name = x.Name,
                 Description = x.Description
             })
-                .ToList();
+            .ToList();
+
+
+            //TODO Restful URLs?
 
             //I also generally prefer to have a parent object, as this is more open to non-breaking modifications in the future
             //... If this was production code you would be writing DTO classes or Response classes 
