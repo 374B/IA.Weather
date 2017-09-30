@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
-using IA.Weather.Services.WeatherService;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 
-namespace IA.Weather.Services.Providers
+namespace IA.Weather.Infrastructure.Providers.Implementations
 {
     public abstract class WeatherProviderHttp : IWeatherProvider
     {
@@ -12,7 +12,7 @@ namespace IA.Weather.Services.Providers
 
         protected abstract WeatherModel MapResponse(string responseBody);
 
-        public async Task<WeatherModel> GetWeatherResponse(WeatherRequest request)
+        public async Task<WeatherModel> GetWeather(string country, string city)
         {
             var req = CreateRequest();
 

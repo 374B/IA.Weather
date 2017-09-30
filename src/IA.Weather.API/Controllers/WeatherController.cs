@@ -58,13 +58,13 @@ namespace IA.Weather.API.Controllers
         public async Task<IHttpActionResult> WeatherFromService([FromUri] string country, [FromUri] string city)
         {
             if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(country));
-            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(city));
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException(nameof(city));
 
             var tasks = _weatherServices.Select(x =>
            {
                return new Func<Task<KeyValuePair<string, WeatherModel>>>(async () =>
                 {
-                    var result = await x.GetByCountry(country);
+                    var result = await x.GetByCity(country, city);
                     return new KeyValuePair<string, WeatherModel>(x.Identifier, result);
                 })();
            });
@@ -97,14 +97,14 @@ namespace IA.Weather.API.Controllers
         {
             if (string.IsNullOrWhiteSpace(service)) throw new ArgumentNullException(nameof(service));
             if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(country));
-            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(city));
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException(nameof(city));
 
             var targetService = _weatherServices.FirstOrDefault(x => x.Identifier.Equals(service, StringComparison.OrdinalIgnoreCase));
             if (targetService == null) return BadRequest($"Could not find a service matching the specified service identifier '{service}'");
 
             try
             {
-                var model = await targetService.GetByCountry(country);
+                var model = await targetService.GetByCity(country, city);
                 return Ok(model.Weather);
             }
             catch (Exception ex)

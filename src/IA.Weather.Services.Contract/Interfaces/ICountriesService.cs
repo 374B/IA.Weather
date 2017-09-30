@@ -5,6 +5,6 @@ namespace IA.Weather.Services.Contract.Interfaces
 {
     public interface ICountriesService
     {
-        Task<List<string>> GetAllCountries();
+        Task<IEnumerable<string>> GetAllCountries();
     }
 }

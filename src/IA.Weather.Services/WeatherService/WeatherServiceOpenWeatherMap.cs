@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using IA.Weather.Domain.Models;
+﻿using IA.Weather.Infrastructure.Providers.Implementations;
 
 namespace IA.Weather.Services.WeatherService
 {
@@ -14,15 +12,4 @@ namespace IA.Weather.Services.WeatherService
         {
         }
     }
-
-    public interface IWeatherProviderOpenWeatherMap : IWeatherProvider { }
-
-    public class WeatherProviderOpenWeatherMap : IWeatherProviderOpenWeatherMap
-    {
-        public Task<WeatherModel> GetWeatherResponse(WeatherRequest request)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
 }

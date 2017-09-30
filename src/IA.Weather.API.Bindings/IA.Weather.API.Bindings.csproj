@@ -34,6 +34,7 @@
       <HintPath>..\..\..\IA.Weather\packages\SimpleInjector.4.0.11\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,6 +58,10 @@
     <ProjectReference Include="..\..\..\IA.Weather\src\IA.Weather.Services\IA.Weather.Services.csproj">
       <Project>{9080f920-1268-41dd-b4e2-f9b0476c5316}</Project>
       <Name>IA.Weather.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IA.Weather.Infrastructure.Providers\IA.Weather.Infrastructure.Providers.csproj">
+      <Project>{9EAD89CF-C680-4405-A23C-708FBB631761}</Project>
+      <Name>IA.Weather.Infrastructure.Providers</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 
-namespace IA.Weather.Services.Providers
+namespace IA.Weather.Infrastructure.Providers.Implementations
 {
-    //TODO: Unit test
-    //TODO: Move this
-    public interface ICountriesProvider
-    {
-        Task<List<string>> GetCountries();
-    }
     /// <summary>
     /// Get a list of countries from the .NET culture libs
     /// </summary>
-    public class CountriesProviderCulture : ICountriesProvider
+    public class CountriesProviderFromCulture : ICountriesProvider
     {
         public async Task<List<string>> GetCountries()
         {

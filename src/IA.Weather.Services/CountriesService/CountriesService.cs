@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 using IA.Weather.Services.Contract.Interfaces;
-using IA.Weather.Services.Providers;
 
 namespace IA.Weather.Services.CountriesService
 {
@@ -16,7 +16,7 @@ namespace IA.Weather.Services.CountriesService
             _provider = provider;
         }
 
-        public async Task<List<string>> GetAllCountries()
+        public async Task<IEnumerable<string>> GetAllCountries()
         {
             //Countries aren't likely to change, only load them once and re-use
             if (_countries == null)

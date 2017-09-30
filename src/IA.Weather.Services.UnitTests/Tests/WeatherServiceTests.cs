@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
+using IA.Weather.Infrastructure.Providers.Implementations;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 using IA.Weather.Services.Contract.Interfaces;
 using IA.Weather.Services.WeatherService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,7 +11,7 @@ using Moq;
 namespace IA.Weather.Services.Test.Tests
 {
     [TestClass]
-    public class WeatherServiceTest
+    public class WeatherServiceTests
     {
         [TestMethod]
         public async Task WeatherServiceX_GetByCountry_Should_Call_The_Provider_Once()
@@ -45,16 +47,22 @@ namespace IA.Weather.Services.Test.Tests
             //Arrange
 
             var provider = new Mock<TProvider>();
-            provider.Setup(x => x.GetWeatherResponse(It.IsAny<WeatherRequest>())).Returns(Task.FromResult(WeatherModel.New("Test")));
+
+            provider.Setup(x => x.GetWeather(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(Task.FromResult(WeatherModel.New("Test")));
+
             var sut = factory(provider.Object);
 
             //Act
 
-            var result = await sut.GetByCountry(string.Empty);
+            var result = await sut.GetByCity(string.Empty, string.Empty);
 
             //Assert
+
             Assert.IsNotNull(result, "A result should be returned");
-            provider.Verify(x => x.GetWeatherResponse(It.IsAny<WeatherRequest>()), Times.Once, "The provider method was not called once");
+
+            provider.Verify(x => x.GetWeather(It.IsAny<string>(), It.IsAny<string>()), Times.Once,
+                "The provider method was not called once");
 
         }
 

@@ -1,4 +1,6 @@
-﻿namespace IA.Weather.Services.WeatherService
+﻿using IA.Weather.Infrastructure.Providers.Implementations;
+
+namespace IA.Weather.Services.WeatherService
 {
     public class WeatherServiceX : WeatherServiceBase
     {
@@ -11,6 +13,5 @@
         }
     }
 
-    public interface IWeatherProviderX : IWeatherProvider { }
 
 }

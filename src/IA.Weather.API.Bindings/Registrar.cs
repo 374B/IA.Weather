@@ -1,12 +1,11 @@
 ﻿using System.Linq;
-using IA.Weather.Services;
-using IA.Weather.Services.Contract;
 using IA.Weather.Services.Contract.Interfaces;
-using System.Reflection;
 using IA.Weather.Services.CountriesService;
-using IA.Weather.Services.Providers;
 using IA.Weather.Services.WeatherService;
 using SimpleInjector;
+using System.Configuration;
+using IA.Weather.Infrastructure.Providers.Implementations;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.API.Bindings
 {
@@ -42,7 +41,17 @@ namespace IA.Weather.API.Bindings
             container.Register<IWeatherProviderPhilly, WeatherProviderPhilly>(Lifestyle.Singleton);
 
             container.Register<ICountriesService, CountriesService>(Lifestyle.Singleton);
-            container.Register<ICountriesProvider, CountriesProviderCulture>(Lifestyle.Singleton);
+
+            //container.Register<ICountriesProvider, CountriesProviderFromCulture>(Lifestyle.Singleton);
+            container.Register<ICountriesProvider>(() =>
+            {
+                const string key = "restcountries.eu:url:allcountries";
+                var url = ConfigurationManager.AppSettings[key];
+                if (string.IsNullOrWhiteSpace(url)) throw new ConfigurationErrorsException($"Required app setting not found or not set. Key: {key}");
+
+                return new CountriesProviderRestCountriesEu(url);
+
+            }, Lifestyle.Singleton);
 
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IA.Weather.API.DTOs.Responses;
@@ -27,7 +28,7 @@ namespace IA.Weather.API.Controllers
 
             var res = new CountriesResponse
             {
-                Countries = countries
+                Countries = countries.ToList()
             };
 
             return Ok(res);

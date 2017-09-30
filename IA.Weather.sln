@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. WEB", "1. WEB", "{F80BED
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Services", "3. Services", "{E222DBA4-A330-424C-9944-14B3AA07A3FA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Services", "4. Services", "{E222DBA4-A330-424C-9944-14B3AA07A3FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.Bindings", "src\IA.Weather.API.Bindings\IA.Weather.API.Bindings.csproj", "{C7D0842E-FE65-4788-AE37-27329D5918B3}"
 EndProject
@@ -30,13 +30,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Services", "src\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Services.Contract", "src\IA.Weather.Services.Contract\IA.Weather.Services.Contract.csproj", "{DB1D6A33-183F-4206-8ED1-5EC74FFDAF42}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Domain", "4. Domain", "{9B5877D3-9730-4307-8B72-E39C42B2BD77}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Domain", "3. Domain", "{9B5877D3-9730-4307-8B72-E39C42B2BD77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Domain", "src\IA.Weather.Domain\IA.Weather.Domain.csproj", "{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.UnitTests", "src\IA.Weather.API.UnitTests\IA.Weather.API.UnitTests.csproj", "{2BD3E890-026C-4BB0-9274-0D6FBD8C9B2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Services.UnitTests", "src\IA.Weather.Services.UnitTests\IA.Weather.Services.UnitTests.csproj", "{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5. Infrastructure", "5. Infrastructure", "{80AD23E9-4D4E-4413-97D1-5BE109949CDA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Infrastructure.Providers", "src\IA.Weather.Infrastructure.Providers\IA.Weather.Infrastructure.Providers.csproj", "{9EAD89CF-C680-4405-A23C-708FBB631761}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Infrastructure.Providers.UnitTests", "IA.Weather.Infrastructure.Providers.UnitTests\IA.Weather.Infrastructure.Providers.UnitTests.csproj", "{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,6 +90,14 @@ Global
 		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAD89CF-C680-4405-A23C-708FBB631761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAD89CF-C680-4405-A23C-708FBB631761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAD89CF-C680-4405-A23C-708FBB631761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAD89CF-C680-4405-A23C-708FBB631761}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +113,8 @@ Global
 		{F48DE805-3A5A-42E4-B9FE-6FCA2F37A1CA} = {9B5877D3-9730-4307-8B72-E39C42B2BD77}
 		{2BD3E890-026C-4BB0-9274-0D6FBD8C9B2D} = {B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}
 		{B595AC58-79BA-4661-B4EE-F77A2CFAAE6A} = {B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}
+		{9EAD89CF-C680-4405-A23C-708FBB631761} = {80AD23E9-4D4E-4413-97D1-5BE109949CDA}
+		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A} = {B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4649D2BC-06AB-4E7D-BD81-8EE9EFE83538}

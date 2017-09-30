@@ -9,6 +9,6 @@ namespace IA.Weather.Services.Contract.Interfaces
         string Name { get; }
         string Description { get; }
 
-        Task<WeatherModel> GetByCountry(string country);
+        Task<WeatherModel> GetByCity(string country, string city);
     }
 }

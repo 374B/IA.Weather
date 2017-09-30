@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using IA.Weather.Domain.Models;
+﻿using IA.Weather.Infrastructure.Providers.Implementations;
 
 namespace IA.Weather.Services.WeatherService
 {
@@ -15,13 +13,5 @@ namespace IA.Weather.Services.WeatherService
         }
     }
 
-    public interface IWeatherProviderPhilly : IWeatherProvider { }
 
-    public class WeatherProviderPhilly : IWeatherProviderPhilly
-    {
-        public Task<WeatherModel> GetWeatherResponse(WeatherRequest request)
-        {
-            return Task.FromResult(WeatherModel.New("Sunny"));
-        }
-    }
 }

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
 using IA.Weather.Services.Contract.Interfaces;
+using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.Services.WeatherService
 {
-    //TODO: Tidy up the classes at the bottom
+    //TODO: Can we make this non-abstract and refactor so we don't need all the service implementations
     public abstract class WeatherServiceBase : IWeatherService
     {
         private readonly IWeatherProvider _provider;
@@ -21,14 +22,13 @@ namespace IA.Weather.Services.WeatherService
             _provider = provider;
         }
 
-        public virtual async Task<WeatherModel> GetByCountry(string country)
+        public virtual async Task<WeatherModel> GetByCity(string country, string city)
         {
-            var req = new WeatherRequest();
             WeatherModel model;
 
             try
             {
-                model = await _provider.GetWeatherResponse(req);
+                model = await _provider.GetWeather(country, city);
             }
             catch (Exception ex)
             {
@@ -39,28 +39,14 @@ namespace IA.Weather.Services.WeatherService
             return model;
         }
 
-        public virtual async Task<List<WeatherModel>> GetByCountries(List<string> countries)
+        public virtual async Task<List<WeatherModel>> GetByCountries(List<KeyValuePair<string, string>> countriesAndCities)
         {
-            var tasks = countries.Select(GetByCountry);
+            //Should use a class instead of leveraging KVP
+
+            var tasks = countriesAndCities.Select(kvp => GetByCity(kvp.Key, kvp.Value));
             var results = await Task.WhenAll(tasks);
             return results.ToList();
         }
 
     }
-
-    public class WeatherResponse
-    {
-
-    }
-
-    public class WeatherRequest
-    {
-
-    }
-
-    public interface IWeatherProvider
-    {
-        Task<WeatherModel> GetWeatherResponse(WeatherRequest request);
-    }
-
 }

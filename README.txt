@@ -7,3 +7,9 @@ For the SelfHost you will be required to run VS as administrator or alternativel
 
 	CMD Prompt (Admin) >
 		netsh http add urlacl url=http://+:9000/ user=DOMAIN\User listen=yes
+
+
+To explain:
+
+	Use of dynamics
+	Exception handling
