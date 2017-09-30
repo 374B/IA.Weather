@@ -85,6 +85,8 @@
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="DTOs\Responses\CountriesResponse.cs" />
+    <Compile Include="DTOs\Responses\CountryResponse.cs" />
+    <Compile Include="DTOs\Responses\LinkResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -95,6 +97,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="appsettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

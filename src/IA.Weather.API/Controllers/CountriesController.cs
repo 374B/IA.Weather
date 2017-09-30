@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -28,19 +29,35 @@ namespace IA.Weather.API.Controllers
 
             var res = new CountriesResponse
             {
-                Countries = countries.ToList()
+                Countries = countries.Select(x => new CountryResponse
+                {
+                    Name = x,
+                    Links = new List<LinkResponse>
+                    {
+                        new LinkResponse
+                        {
+                            Rel = "cities",
+                            Href = RouteGetCitiesByCountry(x)
+                        }
+                    }
+                }).ToList()
             };
 
             return Ok(res);
         }
-        
+
         [HttpGet]
-        [Route("country/{country}/cities")]
+        [Route("country/{country}/cities", Name = "GetCitiesByCountry")]
         public async Task<IHttpActionResult> GetCitiesByCountry([FromUri]string country)
         {
             if (string.IsNullOrWhiteSpace(country)) return BadRequest($"{nameof(country)} is required");
 
             return Ok();
+        }
+
+        private string RouteGetCitiesByCountry(string country)
+        {
+            return this.Url.Link("GetCitiesByCountry", new { country });
         }
 
     }

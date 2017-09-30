@@ -38,7 +38,7 @@ namespace IA.Weather.API.UnitTests.Tests
                 .StatusCodeOk()
                 .ContentOfType(out CountriesResponse response);
 
-            var equal = data.SequenceEqual(response.Countries);
+            var equal = data.SequenceEqual(response.Countries.Select(x => x.Name));
 
             Assert.IsTrue(equal, "Response did not contain the expected countries");
 
