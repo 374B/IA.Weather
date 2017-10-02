@@ -104,7 +104,7 @@
         countriesDropDown.removeAttr("disabled");
 
         countriesDropDown.change(function () {
-            $("#citiesSpinner").removeClass("hidden");
+            setLoading(true);
         });
 
     }
