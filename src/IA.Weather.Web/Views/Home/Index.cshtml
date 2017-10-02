@@ -2,29 +2,76 @@
     ViewBag.Title = "Weather Service";
 }
 
+@Scripts.Render("~/scripts/app.js")
+@Styles.Render("~/Content/font-awesome.css")
+
 <div class="jumbotron">
-    <h1>Weather Service</h1>
-    <p class="lead">Select or enter a country and choose a weather provide to get the weather.</p>
+    <div style="float: left">
+        <h1>Weather Service</h1>
+    </div>
+    <div style="float: right">
+        <h1>
+            <i id="spinner" class="fa fa-spinner fa-spin hidden" style="font-size: 48px; color: black"></i>
+        </h1>
+    </div>
+    <p style="clear:left" class="lead">Select or enter a country, choose a city and finally choose a weather provide to get the weather.</p>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+<div id="error" style="display: none" class="alert alert-danger">
+    <strong>Service unavailable. </strong>This service is currently unavailable or experiencing issues. Please try again later
+</div>
+
+<div id="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Country</h2>
+            <p>
+                Select a country:
+            </p>
+            <select id="countriesDropDown" style="width: 100%"></select>
+            <br />
+            <br />
+            <p>
+                Country not found? Enter one below:
+            </p>
+            <input type="text" style="width: 100%"></input>
+        </div>
+        <div class="col-md-4">
+            <h2>
+                City
+                <i id="citiesSpinner" class="fa fa-spinner fa-spin hidden" style="margin-left: 10px;font-size: 24px; color: black"></i>
+            </h2>
+
+            <div id="citySelectCountry" style="display: none">
+                <p><i>Please select a country</i></p>
+            </div>
+            <div id="cityNoneFound" style="display: none">
+                <p>No cities were found for the selected country</p>
+            </div>
+            <div id="citySelectCity" style="display: none">
+                <p>
+                    Select a city:
+                </p>
+                <select id="citiesDropDown" style="width: 100%"></select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2>Weather Provider</h2>
+            <p>
+                Select a weather provider:
+            </p>
+            <select id="providersDropDown" style="width: 100%"></select>
+            <br />
+            <br />
+            <a class="btn btn-default btn-primary" style="width: 100%">Go!</a>
+        </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            app.init();
+        });
+    </script>
+}
