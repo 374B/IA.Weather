@@ -55,7 +55,7 @@ namespace IA.Weather.API.Controllers
 
         [HttpGet]
         [Route("services/weather")]
-        public async Task<IHttpActionResult> WeatherFromService([FromUri] string country, [FromUri] string city)
+        public async Task<IHttpActionResult> WeatherFromAllServices([FromUri] string country, [FromUri] string city)
         {
             if (string.IsNullOrWhiteSpace(country)) throw new ArgumentNullException(nameof(country));
             if (string.IsNullOrWhiteSpace(city)) throw new ArgumentNullException(nameof(city));

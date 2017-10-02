@@ -60,5 +60,11 @@ namespace IA.Weather.API.Controllers
             return this.Url.Link("GetCitiesByCountry", new { country });
         }
 
+
+        //private string RouteWeatherByCountryAndCity()
+        //{
+        //    return new WeatherController().Url.Link("");
+        //}
+
     }
 }
