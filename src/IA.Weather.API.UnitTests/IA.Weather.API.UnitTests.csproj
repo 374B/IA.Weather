@@ -76,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\IA.Weather.API.DTO\IA.Weather.API.DTO.csproj">
+      <Project>{BE8CEB1D-C696-413D-B64C-B6138A26708C}</Project>
+      <Name>IA.Weather.API.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IA.Weather.API\IA.Weather.API.csproj">
       <Project>{27312f95-96c4-4a54-9111-7c22719c7a6c}</Project>
       <Name>IA.Weather.API</Name>

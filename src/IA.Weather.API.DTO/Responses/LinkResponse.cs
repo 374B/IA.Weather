@@ -1,4 +1,4 @@
-﻿namespace IA.Weather.API.DTOs.Responses
+﻿namespace IA.Weather.API.DTO.Responses
 {
     //TODO: Move and rename
     public class LinkResponse

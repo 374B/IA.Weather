@@ -1,44 +1,23 @@
 ﻿var app = (function (window, undefined) {
 
-    var countriesLoaded = false;
-    var providersLoaded = false;
-
-    var countries = [];
-    var providers = [];
+    var vm;
 
     var countriesDropDown;
-    var providersDropDown;
+    var weatherServicesDropDown;
 
-    function init() {
+    function init(viewModel) {
+
+        vm = viewModel;
+
+        console.log(vm);
 
         countriesDropDown = $("#countriesDropDown");
-        providersDropDown = $("#providersDropDown");
+        weatherServicesDropDown = $("#weatherServicesDropDown");
+
+        setupCountriesDropDown();
+        setupWeatherServicesDropDown();
 
         setUiState();
-
-        var toLoad = 2;
-
-        var onLoad = function () {
-            toLoad--;
-
-            if (toLoad === 0) {
-
-                setLoading(false);
-
-                if (providersLoaded && countriesLoaded) {
-                    setUiState();
-                    setLoading(false);
-                } else {
-                    $("#container").hide();
-                    $("#error").show();
-                }
-            }
-        }
-
-        setLoading(true);
-
-        loadCountriesList(onLoad);
-        loadWeatherProviders(onLoad);
 
     }
 
@@ -53,103 +32,102 @@
 
     function setUiState() {
 
-        setupCountriesDropDown();
-        setupProvidersDropDown();
+        //if (countriesDropDown.length > 0) {
+        //    if (countriesDropDown.prop("selectedIndex") > 0) {
+        //        //Country selected
+        //        $("#cityNoneFound").hide();
+        //        $("#citySelectCountry").hide();
+        //        $("#citySelectCity").show();
 
-        if (countriesLoaded) {
-
-            if (countriesDropDown.length > 0) {
-                if (countriesDropDown.prop("selectedIndex") > 0) {
-                    //Country selected
-                    $("#cityNoneFound").hide();
-                    $("#citySelectCountry").hide();
-                    $("#citySelectCity").show();
-
-                } else {
-                    //Index 0 selected, not a country
-                    $("#cityNoneFound").hide();
-                    $("#citySelectCity").hide();
-                    $("#citySelectCountry").show();
-                }
-            } else {
-                //No countries
-                $("#citySelectCity").hide();
-                $("#citySelectCountry").hide();
-                $("#cityNoneFound").show();
-            }
-        } else {
-            $("#citySelectCity").hide();
-            $("#citySelectCountry").hide();
-            $("#cityNoneFound").hide();
-        }
+        //    } else {
+        //        //Index 0 selected, not a country
+        //        $("#cityNoneFound").hide();
+        //        $("#citySelectCity").hide();
+        //        $("#citySelectCountry").show();
+        //    }
+        //} else {
+        //    //No countries
+        //    $("#citySelectCity").hide();
+        //    $("#citySelectCountry").hide();
+        //    $("#cityNoneFound").show();
+        //}
     }
 
     function setupCountriesDropDown() {
 
         //No countries
 
-        if (countries.length === 0) {
+        if (vm.Countries.length === 0) {
             disableDropDown(countriesDropDown, "No countries available");
             return;
         }
 
-        //Countries loaded
+        //Countries available
 
         countriesDropDown.empty();
 
-        $(countries).each(function (i, v) {
-            countriesDropDown.append($("<option>", { value: v, html: v }));
+        var selectMsg = "Select a country...";
+
+        countriesDropDown.append($("<option>", { value: selectMsg, html: selectMsg }));
+
+        $(vm.Countries).each(function (i, v) {
+            countriesDropDown.append($("<option>", { value: v.Name, html: v.Name }));
         });
 
         countriesDropDown.removeAttr("disabled");
 
         countriesDropDown.change(function () {
-            setLoading(true);
+            loadCities();
         });
 
     }
 
-    function setupProvidersDropDown() {
+    function setupWeatherServicesDropDown() {
 
-        //No providers
+        //No weather services
 
-        if (providers.length === 0) {
-            disableDropDown(providersDropDown, "No provides available");
+        if (vm.WeatherServices.length === 0) {
+            disableDropDown(weatherServicesDropDown, "No weather services available");
             return;
         }
 
-        //Providers loaded
+        //Weather services available
 
-        providersDropDown.empty();
+        weatherServicesDropDown.empty();
 
-        $(providers).each(function (i, v) {
-            providersDropDown.append($("<option>", { value: v, html: v }));
+        $(vm.WeatherServices).each(function (i, v) {
+            weatherServicesDropDown.append($("<option>", { value: v.Name, html: v.Name }));
         });
 
-        providersDropDown.removeAttr("disabled");
+        weatherServicesDropDown.removeAttr("disabled");
 
     }
 
-    function loadCountriesList(callback) {
+    function loadCities() {
 
-        disableDropDown(countriesDropDown, "Loading countries...");
+        //Minus 1 for the "select..." message
+        var idx = countriesDropDown.prop("selectedIndex") - 1;
 
-        countries = ["Select a country...", "Australia", "France", "England", "Spain"];
+        //Country not selected
+        if (countriesDropDown.prop("selectedIndex") < 0) {
+            $("#cityNoneFound").hide();
+            $("#citySelectCountry").hide();
+            $("#citySelectCity").show();
+            return;
+        }
 
-        countriesLoaded = true;
+        //Country selected...
 
-        callback();
-    }
+        setLoading(true);
 
-    function loadWeatherProviders(callback) {
+        $("#citySelectCity").hide();
 
-        disableDropDown(providersDropDown, "Loading providers...");
+        var url = vm.Countries[idx].CitiesLink;
 
-        setTimeout(function () {
-            providers = ["A", "B"];
-            providersLoaded = true;
-            callback();
-        }, 2000);
+        $.getJSON(url, null, function () {
+            setLoading(true);
+        });
+
     }
 
     function disableDropDown(dropDown, message) {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace IA.Weather.API.DTOs.Responses
+namespace IA.Weather.API.DTO.Responses
 {
     public class CountryResponse
     {

@@ -4,11 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using IA.Weather.API.Controllers;
-using IA.Weather.API.DTOs.Responses;
 using IA.Weather.API.UnitTests.Extensions;
 using IA.Weather.Services.Contract.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using IA.Weather.API.DTO.Responses;
 
 namespace IA.Weather.API.UnitTests.Tests
 {

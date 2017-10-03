@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using IA.Weather.API.DTOs.Responses;
+using IA.Weather.API.DTO.Responses;
 using IA.Weather.Services.Contract.Interfaces;
 
 namespace IA.Weather.API.Controllers
 {
-    //TODO: Default prefix?
     [RoutePrefix("api")]
     public class CountriesController : ApiController
     {

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IA.Weather.Web.Models.AppViewModel
+
+@{
     ViewBag.Title = "Weather Service";
 }
 
@@ -14,36 +16,36 @@
             <i id="spinner" class="fa fa-spinner fa-spin hidden" style="font-size: 48px; color: black"></i>
         </h1>
     </div>
-    <p style="clear:left" class="lead">Select or enter a country, choose a city and finally choose a weather provide to get the weather.</p>
+    <p style="clear:left" class="lead">Select a country, choose a city and finally choose a weather provide to get the weather.</p>
 </div>
 
-<div id="error" style="display: none" class="alert alert-danger">
-    <strong>Service unavailable. </strong>This service is currently unavailable or experiencing issues. Please try again later
+<div id="error" class="alert alert-danger" style="@(@Model.Errors.Any() ? "" : "display:none")">
+    <strong>Service unavailable</strong> - Please try again later. The following errors occurred:
+    <br />
+    <br />
+    <ul>
+        @foreach (var e in Model.Errors)
+        {
+            <li>@e</li>
+        }
+    </ul>
 </div>
 
 <div id="container">
     <div class="row">
         <div class="col-md-4">
+            <!--Country selection-->
             <h2>Country</h2>
             <p>
                 Select a country:
             </p>
             <select id="countriesDropDown" style="width: 100%"></select>
-            <br />
-            <br />
-            <p>
-                Country not found? Enter one below:
-            </p>
-            <input type="text" style="width: 100%"></input>
-        </div>
-        <div class="col-md-4">
-            <h2>
-                City
-                <i id="citiesSpinner" class="fa fa-spinner fa-spin hidden" style="margin-left: 10px;font-size: 24px; color: black"></i>
-            </h2>
-
-            <div id="citySelectCountry" style="display: none">
-                <p><i>Please select a country</i></p>
+            <!--City selection-->
+            <h2>City</h2>
+            <div id="citySelectCountry">
+                <p>
+                    <i>Please select a country first</i>
+                </p>
             </div>
             <div id="cityNoneFound" style="display: none">
                 <p>No cities were found for the selected country</p>
@@ -56,14 +58,17 @@
             </div>
         </div>
         <div class="col-md-4">
-            <h2>Weather Provider</h2>
+            <h2>Weather Service</h2>
             <p>
-                Select a weather provider:
+                Select a weather service:
             </p>
-            <select id="providersDropDown" style="width: 100%"></select>
+            <select id="weatherServicesDropDown" style="width: 100%"></select>
             <br />
             <br />
-            <a class="btn btn-default btn-primary" style="width: 100%">Go!</a>
+            <a class="btn btn-default btn-primary" style="max-width: 280px; width: 100%">Go!</a>
+        </div>
+        <div class="col-md-4">
+
         </div>
     </div>
 </div>
@@ -71,7 +76,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            app.init();
+            app.init(@Html.Raw(Json.Encode(Model)));
         });
     </script>
 }

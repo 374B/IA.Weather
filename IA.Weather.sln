@@ -44,6 +44,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Web", "src\IA.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Infrastructure.Providers.UnitTests", "src\IA.Weather.Infrastructure.Providers.UnitTests\IA.Weather.Infrastructure.Providers.UnitTests.csproj", "{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.DTO", "src\IA.Weather.API.DTO\IA.Weather.API.DTO.csproj", "{BE8CEB1D-C696-413D-B64C-B6138A26708C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -98,6 +100,10 @@ Global
 		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE8CEB1D-C696-413D-B64C-B6138A26708C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE8CEB1D-C696-413D-B64C-B6138A26708C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE8CEB1D-C696-413D-B64C-B6138A26708C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE8CEB1D-C696-413D-B64C-B6138A26708C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +121,7 @@ Global
 		{9EAD89CF-C680-4405-A23C-708FBB631761} = {80AD23E9-4D4E-4413-97D1-5BE109949CDA}
 		{15908E5C-D21F-4D24-B057-ADDCC6793428} = {F80BEDB2-CE88-4F81-8FD2-861AA22117EC}
 		{1F65C51D-3E6D-4847-BD0D-F38975DBB71A} = {B3BEDA2C-49D0-496E-AFE1-7BDA8F3C4BE5}
+		{BE8CEB1D-C696-413D-B64C-B6138A26708C} = {4B84205C-0180-4DFF-B5CB-C6675EFD0AF0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4649D2BC-06AB-4E7D-BD81-8EE9EFE83538}
