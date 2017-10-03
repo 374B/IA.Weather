@@ -42,6 +42,7 @@ namespace IA.Weather.API.Bindings
             container.Register<ICountriesService, CountriesService>(Lifestyle.Singleton);
 
             //container.Register<ICountriesProvider, CountriesProviderFromCulture>(Lifestyle.Singleton);
+
             container.Register<ICountriesProvider>(() =>
             {
                 const string key = "restcountries.eu:url:allcountries";
@@ -52,8 +53,15 @@ namespace IA.Weather.API.Bindings
 
             }, Lifestyle.Singleton);
 
-            container.Register<ICitiesProvider, CitiesProviderX>(Lifestyle.Singleton);
+            container.Register<ICitiesProvider>(() =>
+            {
+                const string key = "webservicex:endpoint";
+                var endpoint = ConfigurationManager.AppSettings[key];
+                if (string.IsNullOrWhiteSpace(endpoint)) throw new ConfigurationErrorsException($"Required app setting not found or not set. Key: {key}");
 
+                return new CitiesProviderX(endpoint);
+
+            }, Lifestyle.Singleton);
 
         }
     }

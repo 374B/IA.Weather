@@ -51,9 +51,10 @@ namespace IA.Weather.API.Controllers
             if (string.IsNullOrWhiteSpace(country)) return BadRequest($"{nameof(country)} is required");
 
             var res = await _countriesService.GetCitiesForCountry(country);
-            var x = res;
 
-            return Ok();
+            //TODO: DTO
+
+            return Ok(res);
         }
 
         private string RouteGetCitiesByCountry(string country)

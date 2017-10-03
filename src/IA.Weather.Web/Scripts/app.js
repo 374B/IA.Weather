@@ -3,6 +3,7 @@
     var vm;
 
     var countriesDropDown;
+    var citiesDropDown;
     var weatherServicesDropDown;
 
     function init(viewModel) {
@@ -12,13 +13,11 @@
         console.log(vm);
 
         countriesDropDown = $("#countriesDropDown");
+        citiesDropDown = $("#citiesDropDown");
         weatherServicesDropDown = $("#weatherServicesDropDown");
 
         setupCountriesDropDown();
         setupWeatherServicesDropDown();
-
-        setUiState();
-
     }
 
     function setLoading(loading) {
@@ -28,29 +27,6 @@
         } else {
             $("#spinner").addClass("hidden");
         }
-    }
-
-    function setUiState() {
-
-        //if (countriesDropDown.length > 0) {
-        //    if (countriesDropDown.prop("selectedIndex") > 0) {
-        //        //Country selected
-        //        $("#cityNoneFound").hide();
-        //        $("#citySelectCountry").hide();
-        //        $("#citySelectCity").show();
-
-        //    } else {
-        //        //Index 0 selected, not a country
-        //        $("#cityNoneFound").hide();
-        //        $("#citySelectCity").hide();
-        //        $("#citySelectCountry").show();
-        //    }
-        //} else {
-        //    //No countries
-        //    $("#citySelectCity").hide();
-        //    $("#citySelectCountry").hide();
-        //    $("#cityNoneFound").show();
-        //}
     }
 
     function setupCountriesDropDown() {
@@ -118,6 +94,10 @@
 
         //Country selected...
 
+        setLoading(true);
+
+        $("#cityNoneFound").hide();
+        $("#citySelectCountry").hide();
         $("#citySelectCity").hide();
 
         var url = vm.Countries[idx].CitiesLink;
@@ -130,11 +110,30 @@
             }
         }).then(
             function success(data) {
+
                 console.log(data);
+
+                if (data && data.length > 0) {
+
+                    citiesDropDown.empty();
+
+                    var selectMsg = "Select a city...";
+
+                    countriesDropDown.append($("<option>", { value: selectMsg, html: selectMsg }));
+
+                    $(data).each(function (i, v) {
+                        citiesDropDown.append($("<option>", { value: v, html: v }));
+                    });
+
+                    $("#citySelectCity").show();
+                } else {
+                    $("#cityNoneFound").show();
+                }
                 setLoading(false);
             },
             function fail(data, status) {
-                console.log('fail');
+                //TODO: Should really be an error message
+                $("#citySelectCity").hide();
                 setLoading(false);
             });
     }

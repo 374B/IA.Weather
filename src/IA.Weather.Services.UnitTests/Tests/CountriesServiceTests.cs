@@ -15,9 +15,12 @@ namespace IA.Weather.Services.Test.Tests
         {
             //Arrange
 
-            var mock = new Mock<ICountriesProvider>();
-            mock.Setup(x => x.GetCountries()).ReturnsAsync(new List<string> {"A", "B", "C"});
-            var sut = new CountriesService.CountriesService(mock.Object);
+            var countriesMock = new Mock<ICountriesProvider>();
+            countriesMock.Setup(x => x.GetCountries()).ReturnsAsync(new List<string> {"A", "B", "C"});
+
+            var citiesMock = new Mock<ICitiesProvider>();
+
+            var sut = new CountriesService.CountriesService(countriesMock.Object, citiesMock.Object);
 
             //Act
 
@@ -27,7 +30,7 @@ namespace IA.Weather.Services.Test.Tests
 
             //Assert
 
-            mock.Verify(x => x.GetCountries(), Times.Once);
+            countriesMock.Verify(x => x.GetCountries(), Times.Once);
 
             Assert.IsTrue(result.SequenceEqual(result2));
             Assert.IsTrue(result2.SequenceEqual(result3));

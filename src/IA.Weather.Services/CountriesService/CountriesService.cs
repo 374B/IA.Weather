@@ -36,6 +36,7 @@ namespace IA.Weather.Services.CountriesService
         {
             if (string.IsNullOrWhiteSpace(nameof(country))) throw new ArgumentNullException(nameof(country));
 
+            //TODO: Transform results to a model
             var cities = await _citiesProvider.CitiesForCountry(country);
             return cities;
         }
