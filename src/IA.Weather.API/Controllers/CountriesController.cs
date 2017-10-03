@@ -50,6 +50,9 @@ namespace IA.Weather.API.Controllers
         {
             if (string.IsNullOrWhiteSpace(country)) return BadRequest($"{nameof(country)} is required");
 
+            var res = await _countriesService.GetCitiesForCountry(country);
+            var x = res;
+
             return Ok();
         }
 
@@ -57,12 +60,6 @@ namespace IA.Weather.API.Controllers
         {
             return this.Url.Link("GetCitiesByCountry", new { country });
         }
-
-
-        //private string RouteWeatherByCountryAndCity()
-        //{
-        //    return new WeatherController().Url.Link("");
-        //}
 
     }
 }

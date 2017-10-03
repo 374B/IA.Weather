@@ -9,7 +9,6 @@ using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.API.Bindings
 {
-    //TODO: Naming
     public static class Registrar
     {
         public static void Register(Container container)
@@ -52,6 +51,9 @@ namespace IA.Weather.API.Bindings
                 return new CountriesProviderRestCountriesEu(url);
 
             }, Lifestyle.Singleton);
+
+            container.Register<ICitiesProvider, CitiesProviderX>(Lifestyle.Singleton);
+
 
         }
     }

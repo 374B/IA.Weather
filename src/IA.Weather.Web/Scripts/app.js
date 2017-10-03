@@ -118,16 +118,25 @@
 
         //Country selected...
 
-        setLoading(true);
-
         $("#citySelectCity").hide();
 
         var url = vm.Countries[idx].CitiesLink;
 
-        $.getJSON(url, null, function () {
-            setLoading(true);
-        });
-
+        $.ajax(url, {
+            method: 'GET',
+            contentType: 'text/json',
+            beforeSend: function (xmlHttpRequest) {
+                xmlHttpRequest.withCredentials = true;
+            }
+        }).then(
+            function success(data) {
+                console.log(data);
+                setLoading(false);
+            },
+            function fail(data, status) {
+                console.log('fail');
+                setLoading(false);
+            });
     }
 
     function disableDropDown(dropDown, message) {

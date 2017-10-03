@@ -35,6 +35,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,12 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\GlobalWeatherServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Implementations\CitiesProviderX.cs" />
     <Compile Include="Implementations\CountriesProviderFromCulture.cs" />
     <Compile Include="Implementations\CountriesProviderRestCountriesEu.cs" />
     <Compile Include="Implementations\WeatherProviderHttp.cs" />
     <Compile Include="Implementations\WeatherProviderOpenWeatherMap.cs" />
     <Compile Include="Implementations\WeatherProviderPhilly.cs" />
     <Compile Include="Implementations\WeatherProviderX.cs" />
+    <Compile Include="Interfaces\ICitiesProvider.cs" />
     <Compile Include="Interfaces\ICountriesProvider.cs" />
     <Compile Include="Interfaces\IWeatherProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,7 +69,30 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Connected Services\GlobalWeatherServiceReference\globalweather.wsdl" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\GlobalWeatherServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GlobalWeatherServiceReference\globalweather.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GlobalWeatherServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GlobalWeatherServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\GlobalWeatherServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
