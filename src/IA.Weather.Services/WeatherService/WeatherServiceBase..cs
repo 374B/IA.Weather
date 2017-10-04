@@ -9,7 +9,7 @@ using Serilog;
 
 namespace IA.Weather.Services.WeatherService
 {
-    //TODO: Can we make this non-abstract and refactor so we don't need all the service implementations
+    //TODO: Make this non-abstract and refactor so we don't need all the service implementations
     public abstract class WeatherServiceBase : IWeatherService
     {
         private readonly IWeatherProvider _provider;

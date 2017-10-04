@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.API.WebHost", "s
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7C808257-267C-401D-98E6-22D2DC039E0B}"
 	ProjectSection(SolutionItems) = preProject
-		README.txt = README.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IA.Weather.Services", "src\IA.Weather.Services\IA.Weather.Services.csproj", "{9080F920-1268-41DD-B4E2-F9B0476C5316}"

@@ -14,7 +14,7 @@ namespace IA.Weather.Web
         Task<WeatherServicesResponse> GetWeatherServicesList();
     }
 
-    public class ApiClient
+    public class ApiClient : IApiClient
     {
         private readonly string _hostUrl;
 

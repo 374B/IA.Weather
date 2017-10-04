@@ -3,13 +3,11 @@ There are two ways to run the API
 - WebHost
 - SelfHost
 
-For the SelfHost you will be required to run VS as administrator or alternatively register the port (9000)
+By default the Web application (front end) is configured to talk to the SelfHost API. The required projects for this should run automatically.
 
-	CMD Prompt (Admin) >
-		netsh http add urlacl url=http://+:9000/ user=DOMAIN\User listen=yes
+Notes:
+	Exception handling is lacking in certain areas
+	Some models/DTOS are also lacking in certain areas (no SOC)
+	There are tests however not everything is tested. The tests that are written should demonstrate enough
+	There are a bunch of other TODOS scattered throughout the code
 
-
-To explain:
-
-	Use of dynamics
-	Exception handling
