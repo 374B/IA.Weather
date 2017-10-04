@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IA.Weather.API.DTO.Responses;
+using IA.Weather.API.Helpers;
 using IA.Weather.Services.Contract.Interfaces;
 
 namespace IA.Weather.API.Controllers
@@ -10,10 +11,14 @@ namespace IA.Weather.API.Controllers
     [RoutePrefix("api")]
     public class CountriesController : ApiController
     {
+        private readonly IRouteProvider _routeProvider;
         private readonly ICountriesService _countriesService;
 
-        public CountriesController(ICountriesService countriesService)
+        public CountriesController(
+            IRouteProvider routeProvider,
+            ICountriesService countriesService)
         {
+            _routeProvider = routeProvider;
             _countriesService = countriesService;
         }
 
@@ -35,7 +40,7 @@ namespace IA.Weather.API.Controllers
                         new LinkResponse
                         {
                             Rel = "cities",
-                            Href = RouteGetCitiesByCountry(x)
+                            Href = _routeProvider.Route(this, "GetCitiesByCountry", new { country = x })
                         }
                     }
                 }).ToList()
@@ -55,11 +60,6 @@ namespace IA.Weather.API.Controllers
             //TODO: DTO
 
             return Ok(res);
-        }
-
-        private string RouteGetCitiesByCountry(string country)
-        {
-            return this.Url.Link("GetCitiesByCountry", new { country });
         }
 
     }

@@ -16,6 +16,7 @@ namespace IA.Weather.API.UnitTests.Extensions
         {
             self.Configuration = config ?? new HttpConfiguration();
             self.Request = req ?? new HttpRequestMessage();
+            
             return self;
         }
     }

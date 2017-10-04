@@ -9,6 +9,7 @@ using System.Configuration;
 using IA.Weather.Infrastructure.Providers.Helpers;
 using IA.Weather.Infrastructure.Providers.Implementations;
 using IA.Weather.Infrastructure.Providers.Interfaces;
+using IA.Weather.API.Helpers;
 
 namespace IA.Weather.API.Bindings
 {
@@ -22,6 +23,8 @@ namespace IA.Weather.API.Bindings
 
             container.Register<ICountriesService, CountriesService>(Lifestyle.Singleton);
 
+            container.Register<ICitiesProvider, CitiesProviderX>(Lifestyle.Singleton);
+
             container.Register(() =>
             {
                 var endpoint = "webservicex:endpoint".GetAppSetting(Required);
@@ -29,7 +32,8 @@ namespace IA.Weather.API.Bindings
             },
             Lifestyle.Singleton);
 
-            container.Register<ICitiesProvider, CitiesProviderX>(Lifestyle.Singleton);
+            container.Register<IRouteProvider, RouteProvider>(Lifestyle.Singleton);
+
         }
 
         private static void WeatherServices(Container container)

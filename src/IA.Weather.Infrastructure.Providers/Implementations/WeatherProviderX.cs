@@ -5,7 +5,6 @@ using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.Infrastructure.Providers.Implementations
 {
-    //TODO: Can we remove this
     public interface IWeatherProviderX : IWeatherProvider { }
 
     public class WeatherProviderX : IWeatherProviderX

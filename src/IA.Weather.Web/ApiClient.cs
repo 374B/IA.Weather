@@ -7,6 +7,13 @@ using Newtonsoft.Json;
 
 namespace IA.Weather.Web
 {
+    public interface IApiClient
+    {
+        Task<CountriesResponse> GetCountriesList();
+
+        Task<WeatherServicesResponse> GetWeatherServicesList();
+    }
+
     public class ApiClient
     {
         private readonly string _hostUrl;

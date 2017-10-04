@@ -9,12 +9,9 @@ namespace IA.Weather.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ApiClient _apiClient;
+        private readonly IApiClient _apiClient;
 
-        //TODO: Remvoe this, use DI
-        public HomeController() : this(new ApiClient()) { }
-
-        public HomeController(ApiClient apiClient)
+        public HomeController(IApiClient apiClient)
         {
             _apiClient = apiClient;
         }

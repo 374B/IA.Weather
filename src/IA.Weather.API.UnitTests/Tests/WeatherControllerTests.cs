@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using IA.Weather.API.Controllers;
+using IA.Weather.API.Helpers;
 using IA.Weather.API.UnitTests.Extensions;
 using IA.Weather.Services.Contract.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -17,6 +18,8 @@ namespace IA.Weather.API.UnitTests.Tests
         {
             //Arrange
 
+            var routeProviderMock = new Mock<IRouteProvider>();
+
             var weatherServiceMocks = new List<Mock<IWeatherService>>
             {
                 new Mock<IWeatherService>(),
@@ -28,9 +31,9 @@ namespace IA.Weather.API.UnitTests.Tests
                 m.SetupGet(x => x.Identifier)
                     .Returns(weatherServiceMocks.IndexOf(m).ToString()));
 
-            var sut = new WeatherController(weatherServiceMocks.Select(m => m.Object))
+            var sut = new WeatherController(routeProviderMock.Object, weatherServiceMocks.Select(m => m.Object))
                 .SetupForTesting();
-        
+
             //Act
 
             var result = sut.AvailableServices();

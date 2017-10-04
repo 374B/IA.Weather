@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Destructurama;
 using IA.Weather.API.Bindings;
 using Microsoft.Owin.Hosting;
+using Serilog;
 using SimpleInjector;
 using Topshelf;
 
@@ -10,7 +12,6 @@ namespace IA.Weather.API.SelfHost
     class Program
     {
         public const int ApiPort = 9000;
-        public const int SeqPort = 9001;
 
         static int Main(string[] args)
         {
@@ -32,17 +33,13 @@ namespace IA.Weather.API.SelfHost
 
         private static void ConfigureLogging()
         {
-            //var logCfg = new LogConfiguration();
-
-            ////TODO: Logging configuration should be in the common startup? Should also be configuration based.
-            //Log.Logger = new LoggerConfiguration()
-            //    .Enrich.WithProperty("Application", "WeCare.Api.SelfHost")
-            //    .Enrich.FromLogContext()
-            //    .WriteTo.LiterateConsole()
-            //    .WriteTo.Seq($"http://localhost:{SeqPort}", compact: true)
-            //    .MinimumLevel.Debug()
-            //    .Destructure.UsingAttributes()
-            //    .CreateLogger();
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithProperty("Application", "IA.Weather.API.SelfHost")
+                .Enrich.FromLogContext()
+                .WriteTo.LiterateConsole()
+                .MinimumLevel.Debug()
+                .Destructure.UsingAttributes()
+                .CreateLogger();
         }
     }
 
@@ -52,14 +49,20 @@ namespace IA.Weather.API.SelfHost
 
         public void Start()
         {
+            var url = $"http://localhost:{Program.ApiPort}";
+            var swaggerUrl = $"{url}/swagger";
+
             var options = new StartOptions();
-            options.Urls.Add($"http://localhost:{Program.ApiPort}");
+            options.Urls.Add(url);
 
             _webApp = WebApp.Start<Startup>(options);
 
+            Log.Information("API running: {url}", url);
+            Log.Information("Swagger running: {url}", swaggerUrl);
+
+
 #if DEBUG
-            System.Diagnostics.Process.Start($"{options.Urls.First()}/swagger");
-            //System.Diagnostics.Process.Start($"http://localhost:{Program.SeqPort}");
+            System.Diagnostics.Process.Start(swaggerUrl);
 #endif
         }
 

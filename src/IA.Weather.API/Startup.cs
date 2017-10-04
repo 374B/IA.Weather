@@ -5,6 +5,7 @@ using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using Swashbuckle.Application;
 using Microsoft.Owin.Cors;
+using Serilog;
 
 namespace IA.Weather.API
 {
@@ -56,11 +57,9 @@ namespace IA.Weather.API
         {
             _container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
             _container.RegisterWebApiControllers(_configuration);
+            _container.Register(() => Log.Logger, Lifestyle.Singleton);
 
             Bindings(_container);
-
-            ////TODO: Logging here?
-            //_container.Register(() => Log.Logger, Lifestyle.Singleton);
 
             _container.Verify();
             _configuration.DependencyResolver = new SimpleInjectorWebApiDependencyResolver(_container);

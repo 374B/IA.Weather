@@ -2,7 +2,7 @@
 
 namespace IA.Weather.Domain.Models
 {
-    //TODO
+    //TODO: Expand this class, remove pointless static ctor
     public class WeatherModel
     {
         public string Weather { get; }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
 using IA.Weather.Services.Contract.Interfaces;
 using IA.Weather.Infrastructure.Providers.Interfaces;
+using Serilog;
 
 namespace IA.Weather.Services.WeatherService
 {
@@ -32,7 +33,7 @@ namespace IA.Weather.Services.WeatherService
             }
             catch (Exception ex)
             {
-                //TODO: Log
+                Log.Error(ex, "GetByCity failed. Country : {country}, City: {city}", country, city);
                 model = WeatherModel.FromException(ex);
             }
 

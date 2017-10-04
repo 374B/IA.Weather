@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -9,6 +8,7 @@ using IA.Weather.Services.Contract.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using IA.Weather.API.DTO.Responses;
+using IA.Weather.API.Helpers;
 
 namespace IA.Weather.API.UnitTests.Tests
 {
@@ -22,11 +22,13 @@ namespace IA.Weather.API.UnitTests.Tests
 
             var data = new List<string> { "Australia", "England" };
 
-            var mock = new Mock<ICountriesService>();
-            mock.Setup(x => x.GetAllCountries()).ReturnsAsync(data);
+            var routeProviderMock = new Mock<IRouteProvider>();
 
-            var sut = new CountriesController(mock.Object)
-                .SetupForTesting();
+            var serviceMock = new Mock<ICountriesService>();
+            serviceMock.Setup(x => x.GetAllCountries()).ReturnsAsync(data);
+
+            var sut = new CountriesController(routeProviderMock.Object, serviceMock.Object)
+              .SetupForTesting();
 
             //Act
 
@@ -49,9 +51,10 @@ namespace IA.Weather.API.UnitTests.Tests
         {
             //Arrange
 
-            var mock = new Mock<ICountriesService>();
+            var routeProviderMock = new Mock<IRouteProvider>();
+            var serviceMock = new Mock<ICountriesService>();
 
-            var sut = new CountriesController(mock.Object)
+            var sut = new CountriesController(routeProviderMock.Object, serviceMock.Object)
                 .SetupForTesting();
 
             //Act
@@ -70,9 +73,10 @@ namespace IA.Weather.API.UnitTests.Tests
         {
             //Arrange
 
-            var mock = new Mock<ICountriesService>();
+            var routeProviderMock = new Mock<IRouteProvider>();
+            var serviceMock = new Mock<ICountriesService>();
 
-            var sut = new CountriesController(mock.Object)
+            var sut = new CountriesController(routeProviderMock.Object, serviceMock.Object)
                 .SetupForTesting();
 
             //Act

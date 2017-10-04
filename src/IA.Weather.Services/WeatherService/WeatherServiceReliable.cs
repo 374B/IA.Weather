@@ -6,11 +6,13 @@ using IA.Weather.Domain.Models;
 using IA.Weather.Infrastructure.Providers.Implementations;
 using IA.Weather.Infrastructure.Providers.Interfaces;
 using IA.Weather.Services.Contract.Interfaces;
+using Serilog;
 
 namespace IA.Weather.Services.WeatherService
 {
     public class WeatherServiceReliable : IWeatherService
     {
+        private readonly ILogger _logger;
         private readonly List<IWeatherProvider> _providers;
 
         public string Identifier => "REL";
@@ -18,9 +20,11 @@ namespace IA.Weather.Services.WeatherService
         public string Description => "A more reliable weather service";
 
         public WeatherServiceReliable(
+            ILogger logger,
             IWeatherProviderOpenWeatherMap providerOpenWeatherMap,
             IWeatherProviderX providerX)
         {
+            _logger = logger;
             _providers = new List<IWeatherProvider> { providerOpenWeatherMap, providerX };
         }
 
@@ -41,7 +45,7 @@ namespace IA.Weather.Services.WeatherService
                 }
                 catch (Exception ex)
                 {
-                    //TODO: Log
+                    _logger.Warning(ex, "Provider exception. Type: {providerType}, Method: {method}", provider.GetType().Name, nameof(provider.GetWeather));
                     errors.Add(ErrorModel.FromException(ex, $"Exception from {provider.GetType().Name}"));
                 }
             }

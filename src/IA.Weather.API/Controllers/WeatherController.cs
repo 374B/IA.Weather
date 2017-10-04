@@ -4,18 +4,24 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IA.Weather.API.DTO.Responses;
+using IA.Weather.API.Helpers;
 using IA.Weather.Domain.Models;
 using IA.Weather.Services.Contract.Interfaces;
+using Serilog;
 
 namespace IA.Weather.API.Controllers
 {
     [RoutePrefix("api/weather")]
     public class WeatherController : ApiController
     {
+        private readonly IRouteProvider _routeProvider;
         private readonly IEnumerable<IWeatherService> _weatherServices;
 
-        public WeatherController(IEnumerable<IWeatherService> weatherServices)
+        public WeatherController(
+            IRouteProvider routeProvider,
+            IEnumerable<IWeatherService> weatherServices)
         {
+            _routeProvider = routeProvider;
             _weatherServices = weatherServices.ToList();
         }
 
@@ -28,7 +34,7 @@ namespace IA.Weather.API.Controllers
                 Identifier = x.Identifier,
                 Name = x.Name,
                 Description = x.Description,
-                Link = RouteGetWeatherFromService(x.Identifier)
+                Link = _routeProvider.Route(this, "WeatherFromService", new { service = x.Identifier })
             })
             .ToList();
 
@@ -77,7 +83,7 @@ namespace IA.Weather.API.Controllers
             }
             catch (Exception ex)
             {
-                //TODO
+                Log.Error(ex, "WeatherFromAllServices failed. Country : {country}, City: {city}", country, city);
                 throw;
             }
         }
@@ -100,16 +106,13 @@ namespace IA.Weather.API.Controllers
             }
             catch (Exception ex)
             {
-                //TODO
+                Log.Error(ex, "WeatherFromService failed. Country : {country}, City: {city}", country, city);
                 throw;
             }
 
         }
 
-        private string RouteGetWeatherFromService(string service)
-        {
-            return this.Url.Link("WeatherFromService", new {service = service});
-        }
+
     }
 }
 
