@@ -27,11 +27,10 @@ namespace IA.Weather.API.Controllers
             {
                 Identifier = x.Identifier,
                 Name = x.Name,
-                Description = x.Description
+                Description = x.Description,
+                Link = RouteGetWeatherFromService(x.Identifier)
             })
             .ToList();
-
-            //TODO Restful URLs?
 
             var responseObj = new WeatherServicesResponse
             {
@@ -84,7 +83,7 @@ namespace IA.Weather.API.Controllers
         }
 
         [HttpGet]
-        [Route("services/{service}/weather")]
+        [Route("services/{service}/weather", Name = "WeatherFromService")]
         public async Task<IHttpActionResult> WeatherFromService([FromUri]string service, [FromUri] string country, [FromUri] string city)
         {
             if (string.IsNullOrWhiteSpace(service)) throw new ArgumentNullException(nameof(service));
@@ -105,6 +104,11 @@ namespace IA.Weather.API.Controllers
                 throw;
             }
 
+        }
+
+        private string RouteGetWeatherFromService(string service)
+        {
+            return this.Url.Link("WeatherFromService", new {service = service});
         }
     }
 }

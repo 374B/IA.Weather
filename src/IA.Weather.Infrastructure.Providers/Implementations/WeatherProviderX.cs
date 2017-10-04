@@ -1,5 +1,6 @@
-﻿using System.Net.Http;
+﻿using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
+using IA.Weather.Infrastructure.Providers.Helpers;
 using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.Infrastructure.Providers.Implementations
@@ -7,20 +8,22 @@ namespace IA.Weather.Infrastructure.Providers.Implementations
     //TODO: Can we remove this
     public interface IWeatherProviderX : IWeatherProvider { }
 
-    public class WeatherProviderX : WeatherProviderHttp, IWeatherProviderX
+    public class WeatherProviderX : IWeatherProviderX
     {
-        protected override HttpRequestMessage CreateRequest()
-        {
-            var req = new HttpRequestMessage(
-                HttpMethod.Get,
-                "http://www.webservicex.net/globalweather.asmx/GetWeather?CityName=Sydney&CountryName=Australia");
+        private readonly GlobalWeatherServiceProxy _serviceProxy;
 
-            return req;
+        public WeatherProviderX(GlobalWeatherServiceProxy serviceProxy)
+        {
+            _serviceProxy = serviceProxy;
         }
 
-        protected override WeatherModel MapResponse(string responseBody)
+        public async Task<WeatherModel> GetWeather(string country, string city)
         {
-            return WeatherModel.New(responseBody);
+            if (string.IsNullOrWhiteSpace(country)) throw new System.ArgumentException(nameof(country));
+            if (string.IsNullOrWhiteSpace(city)) throw new System.ArgumentException(nameof(city));
+
+            var data = await _serviceProxy.Invoke(c => c.GetWeatherAsync(city, country));
+            return WeatherModel.New(data);
         }
     }
 }

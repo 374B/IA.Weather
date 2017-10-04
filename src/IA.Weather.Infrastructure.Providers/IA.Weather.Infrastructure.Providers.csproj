@@ -50,6 +50,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GlobalWeatherServiceProxy.cs" />
     <Compile Include="Implementations\CitiesProviderX.cs" />
     <Compile Include="Implementations\CountriesProviderFromCulture.cs" />
     <Compile Include="Implementations\CountriesProviderRestCountriesEu.cs" />

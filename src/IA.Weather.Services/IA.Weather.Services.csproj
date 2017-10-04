@@ -48,6 +48,7 @@
     <Compile Include="WeatherService\WeatherServiceBase..cs" />
     <Compile Include="WeatherService\WeatherServiceOpenWeatherMap.cs" />
     <Compile Include="WeatherService\WeatherServicePhilly.cs" />
+    <Compile Include="WeatherService\WeatherServiceReliable.cs" />
     <Compile Include="WeatherService\WeatherServiceX.cs" />
   </ItemGroup>
   <ItemGroup>

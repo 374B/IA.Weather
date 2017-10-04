@@ -4,42 +4,36 @@ using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using IA.Weather.Infrastructure.Providers.Helpers;
 using IA.Weather.Infrastructure.Providers.Interfaces;
 
 namespace IA.Weather.Infrastructure.Providers.Implementations
 {
     public class CitiesProviderX : ICitiesProvider
     {
-        private readonly string _endpointAddress;
+        private readonly GlobalWeatherServiceProxy _serviceProxy;
 
-        public CitiesProviderX(string endpointAddress)
+        public CitiesProviderX(GlobalWeatherServiceProxy serviceProxy)
         {
-            _endpointAddress = endpointAddress;
+            _serviceProxy = serviceProxy;
         }
 
         public async Task<List<string>> CitiesForCountry(string country)
         {
-            //TODO: Basic ex handling
-            var addr = new EndpointAddress(_endpointAddress);
-            var binding = new BasicHttpBinding();
-
             var results = new List<string>();
 
-            using (var client = new GlobalWeatherServiceReference.GlobalWeatherSoapClient(binding, addr))
+            var data = await _serviceProxy.Invoke(c => c.GetCitiesByCountryAsync(country));
+
+            using (var tr = new StringReader(data))
             {
-                var data = await client.GetCitiesByCountryAsync(country);
+                var xdoc = XDocument.Load(tr);
+                var cityElements = xdoc.Descendants("City").ToList();
 
-                using (var tr = new StringReader(data))
-                {
-                    var xdoc = XDocument.Load(tr);
-                    var cityElements = xdoc.Descendants("City").ToList();
+                if (cityElements.Any())
+                    results.AddRange(cityElements.Select(e => e.Value.Trim()));
 
-                    if (cityElements.Any())
-                        results.AddRange(cityElements.Select(e => e.Value.Trim()));
-
-                    return results;
-
-                }
+                return results;
+                
             }
         }
     }

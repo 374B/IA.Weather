@@ -70,6 +70,7 @@ namespace IA.Weather.Web.Controllers
                     viewModel.WeatherServices.Add(new WeatherServiceViewModel
                     {
                         Name = s.Name,
+                        WeatherLink = s.Link
                     });
                 }
             }

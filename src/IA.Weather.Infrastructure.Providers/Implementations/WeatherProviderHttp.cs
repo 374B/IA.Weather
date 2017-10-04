@@ -8,14 +8,12 @@ namespace IA.Weather.Infrastructure.Providers.Implementations
 {
     public abstract class WeatherProviderHttp : IWeatherProvider
     {
-        protected abstract HttpRequestMessage CreateRequest();
-
-        protected abstract WeatherModel MapResponse(string responseBody);
-
         public async Task<WeatherModel> GetWeather(string country, string city)
         {
-            var req = CreateRequest();
+            if (string.IsNullOrWhiteSpace(country)) throw new ArgumentException(nameof(country));
+            if (string.IsNullOrWhiteSpace(city)) throw new ArgumentException(nameof(city));
 
+            using (var req = CreateRequest(country, city))
             using (var httpClient = new HttpClient())
             {
                 HttpResponseMessage res;
@@ -50,5 +48,10 @@ namespace IA.Weather.Infrastructure.Providers.Implementations
             }
 
         }
+
+        protected abstract HttpRequestMessage CreateRequest(string country, string city);
+
+        protected abstract WeatherModel MapResponse(string responseBody);
+
     }
 }

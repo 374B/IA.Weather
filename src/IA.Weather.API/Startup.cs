@@ -4,7 +4,7 @@ using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 using SimpleInjector.Lifestyles;
 using Swashbuckle.Application;
-using System.Web.Http.Cors;
+using Microsoft.Owin.Cors;
 
 namespace IA.Weather.API
 {
@@ -22,9 +22,7 @@ namespace IA.Weather.API
         public void Configuration(IAppBuilder appBuilder)
         {
             //You'd usually lock this down a bit more by restricting the origin
-            var cors = new EnableCorsAttribute("*", "*", "GET");
-
-            _configuration.EnableCors(cors);
+            appBuilder.UseCors(CorsOptions.AllowAll);
 
             Container();
             Routes();

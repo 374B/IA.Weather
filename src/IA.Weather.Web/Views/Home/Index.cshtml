@@ -16,7 +16,7 @@
             <i id="spinner" class="fa fa-spinner fa-spin hidden" style="font-size: 48px; color: black"></i>
         </h1>
     </div>
-    <p style="clear:left" class="lead">Select a country, choose a city and finally choose a weather provide to get the weather.</p>
+    <p style="clear:left" class="lead">Select a country, choose a city and finally choose a weather provider to get the weather.</p>
 </div>
 
 <div id="error" class="alert alert-danger" style="@(@Model.Errors.Any() ? "" : "display:none")">
@@ -42,19 +42,11 @@
             <select id="countriesDropDown" style="width: 100%"></select>
             <!--City selection-->
             <h2>City</h2>
-            <div id="citySelectCountry">
-                <p>
-                    <i>Please select a country first</i>
+            <div>
+                <p id="citiesText">
+                    Please select a country first
                 </p>
-            </div>
-            <div id="cityNoneFound" style="display: none">
-                <p>No cities were found for the selected country</p>
-            </div>
-            <div id="citySelectCity" style="display: none">
-                <p>
-                    Select a city:
-                </p>
-                <select id="citiesDropDown" style="width: 100%"></select>
+                <select id="citiesDropDown" style="width: 100%; display: none"></select>
             </div>
         </div>
         <div class="col-md-4">
@@ -65,10 +57,10 @@
             <select id="weatherServicesDropDown" style="width: 100%"></select>
             <br />
             <br />
-            <a class="btn btn-default btn-primary" style="max-width: 280px; width: 100%">Go!</a>
+            <a id="goButton" class="btn btn-default btn-primary disabled" style="max-width: 280px; width: 100%">Go!</a>
         </div>
         <div class="col-md-4">
-
+            <p id="resultText"></p>
         </div>
     </div>
 </div>

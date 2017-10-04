@@ -2,6 +2,7 @@
 
 namespace IA.Weather.Domain.Models
 {
+    //TODO
     public class WeatherModel
     {
         public string Weather { get; }
