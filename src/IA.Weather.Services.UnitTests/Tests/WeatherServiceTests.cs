@@ -21,17 +21,10 @@ namespace IA.Weather.Services.Test.Tests
         }
 
         [TestMethod]
-        public async Task WeatherServicePhil_GetByCountry_Should_Call_The_Provider_Once()
+        public async Task WeatherServiceOpenWeatherMap_GetByCountry_Should_Call_The_Provider_Once()
         {
             await WeatherService_GetByCountry_Should_Call_The_Provider_Once<IWeatherProviderOpenWeatherMap>(
                 provider => new WeatherServiceOpenWeatherMap(provider));
-        }
-
-        [TestMethod]
-        public async Task WeatherServicePhilly_GetByCountry_Should_Call_The_Provider_Once()
-        {
-            await WeatherService_GetByCountry_Should_Call_The_Provider_Once<IWeatherProviderPhilly>(
-                provider => new WeatherServicePhilly(provider));
         }
 
         /// <summary>
@@ -49,7 +42,7 @@ namespace IA.Weather.Services.Test.Tests
             var provider = new Mock<TProvider>();
 
             provider.Setup(x => x.GetWeather(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(Task.FromResult(WeatherModel.New("Test")));
+                .Returns(Task.FromResult(new WeatherModel("Test", "Test")));
 
             var sut = factory(provider.Object);
 

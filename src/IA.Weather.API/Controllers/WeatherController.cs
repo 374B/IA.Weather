@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using IA.Weather.API.DTO.Responses;
 using IA.Weather.API.Helpers;
-using IA.Weather.Domain.Models;
+using IA.Weather.API.Mappers;
 using IA.Weather.Services.Contract.Interfaces;
 using Serilog;
 
@@ -59,10 +60,11 @@ namespace IA.Weather.API.Controllers
 
             var tasks = _weatherServices.Select(x =>
            {
-               return new Func<Task<KeyValuePair<string, WeatherModel>>>(async () =>
+               return new Func<Task<KeyValuePair<string, WeatherResponse>>>(async () =>
                 {
                     var result = await x.GetByCity(country, city);
-                    return new KeyValuePair<string, WeatherModel>(x.Identifier, result);
+                    var mapped = WeatherModelMapper.ToWeatherResponse(result);
+                    return new KeyValuePair<string, WeatherResponse>(x.Identifier, mapped);
                 })();
            });
 
@@ -74,7 +76,7 @@ namespace IA.Weather.API.Controllers
                     Results = results.Select(x => new
                     {
                         x.Key,
-                        x.Value.Weather
+                        x.Value
                     })
                 };
 
@@ -102,7 +104,16 @@ namespace IA.Weather.API.Controllers
             try
             {
                 var model = await targetService.GetByCity(country, city);
-                return Ok(model.Weather);
+
+                if (!model.Errored)
+                {
+                    var res = WeatherModelMapper.ToWeatherResponse(model);
+                    return Ok(res);
+                }
+                else
+                {
+                    return Content(HttpStatusCode.InternalServerError, model.Error.ErrorMessage);
+                }
             }
             catch (Exception ex)
             {
@@ -111,8 +122,6 @@ namespace IA.Weather.API.Controllers
             }
 
         }
-
-
     }
 }
 

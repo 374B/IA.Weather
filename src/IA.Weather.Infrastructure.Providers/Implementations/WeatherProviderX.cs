@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using IA.Weather.Domain.Models;
 using IA.Weather.Infrastructure.Providers.Helpers;
 using IA.Weather.Infrastructure.Providers.Interfaces;
@@ -22,7 +23,9 @@ namespace IA.Weather.Infrastructure.Providers.Implementations
             if (string.IsNullOrWhiteSpace(city)) throw new System.ArgumentException(nameof(city));
 
             var data = await _serviceProxy.Invoke(c => c.GetWeatherAsync(city, country));
-            return WeatherModel.New(data);
+
+            //TODO
+            throw new NotImplementedException();
         }
     }
 }

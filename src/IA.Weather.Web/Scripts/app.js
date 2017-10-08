@@ -7,7 +7,19 @@
     var citiesText;
     var weatherServicesDropDown;
     var goButton;
-    var resultText;
+
+    var resultContainer;
+    var resultCityText;
+    var resultCountryText;
+    var resultCurrentTempText;
+    var resultDescPrimaryText;
+    var resultDecSecondaryText;
+    var resultErrorContainer;
+    var resultErrorText;
+    var detailedTable;
+
+    var currentCountry;
+    var currentCity;
 
     function init(viewModel) {
 
@@ -20,7 +32,18 @@
         citiesText = $("#citiesText");
         weatherServicesDropDown = $("#weatherServicesDropDown");
         goButton = $("#goButton");
-        resultText = $("#resultText");
+
+        resultContainer = $("#resultContainer");
+        resultCityText = $("#resultCityText");
+        resultCountryText = $("#resultCountryText");
+        resultCurrentTempText = $("#resultCurrentTempText");
+        resultDescPrimaryText = $("#resultDescPrimaryText");
+        resultDecSecondaryText = $("#resultDecSecondaryText");
+
+        detailedTable = $("#detailedTable");
+
+        resultErrorContainer = $("#resultErrorContainer");
+        resultErrorText = $("#resultErrorText");
 
         setupCountriesDropDown();
         setupCitiesDropDown();
@@ -101,9 +124,13 @@
 
     function setupGoButton() {
         goButton.click(function () {
+
             goButton.addClass("disabled");
-            loadWeather();
-            goButton.removeClass("disabled");
+
+            loadWeather(function () {
+                goButton.removeClass("disabled");
+
+            });
         });
     }
 
@@ -170,30 +197,73 @@
             });
     }
 
-    function loadWeather() {
+    function loadWeather(callback) {
 
         var weatherService = selectedWeatherService();
-        var country = selectedCountry();
-        var city = selectedCity();
+
+        currentCountry = selectedCountry();
+        currentCity = selectedCity();
 
         var url = weatherService.WeatherLink + "?";
-        var args = { country: country.Name, city: city };
+        var args = { country: currentCountry.Name, city: currentCity };
 
         url = url + $.param(args);
 
-        resultText.text("");
+        clearWeatherResult();
 
         setLoading(true);
 
         get(url,
             function (data) {
-                resultText.text(data);
+                displayWeatherResult(data);
                 setLoading(false);
+                callback();
             },
             function (data, status) {
-                resultText.text("Error: " + data);
+                displayWeatherError(data);
                 setLoading(false);
+                callback();
             });
+    }
+
+    function clearWeatherResult() {
+
+        resultContainer.hide();
+
+        resultCurrentTempText.text("");
+        resultDescPrimaryText.text("");
+        resultDecSecondaryText.text("");
+        resultCountryText.text("");
+        resultCityText.text("");
+
+        detailedTable.empty();
+
+        resultErrorContainer.hide();
+        resultErrorText.text("");
+
+    }
+
+    function displayWeatherResult(data) {
+
+        resultCountryText.text(currentCountry.Name);
+        resultCityText.text(currentCity);
+
+        resultDescPrimaryText.text(data.MainDesc);
+        resultDecSecondaryText.text(data.SecondaryDesc);
+        resultCurrentTempText.text(data.CurrentTemp);
+
+        $.map(data.Props, function (v, k) {
+            detailedTable.append("<tr><td class=\"col-md-1\">" + k + "</td><td class=\"col-md-3\">" + v + "</td></tr>");
+        });
+
+        resultContainer.show();
+
+    }
+
+    function displayWeatherError(data) {
+
+        resultErrorText.text(data.responseText);
+        resultErrorContainer.show();
     }
 
     function goButtonEnabledLogic() {
@@ -227,7 +297,6 @@
     function dropDownSelectedItem(dropDown, dataSource, indexOffset) {
         var idx = dropDown.prop("selectedIndex") + indexOffset;
         return dataSource[idx];
-
     }
 
     function get(url, successCallback, failCallback) {

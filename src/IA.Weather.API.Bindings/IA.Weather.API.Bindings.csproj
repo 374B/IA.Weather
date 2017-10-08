@@ -63,6 +63,10 @@
       <Project>{27312F95-96C4-4A54-9111-7C22719C7A6C}</Project>
       <Name>IA.Weather.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IA.Weather.Domain\IA.Weather.Domain.csproj">
+      <Project>{f48de805-3a5a-42e4-b9fe-6fca2f37a1ca}</Project>
+      <Name>IA.Weather.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\IA.Weather.Infrastructure.Providers\IA.Weather.Infrastructure.Providers.csproj">
       <Project>{9EAD89CF-C680-4405-A23C-708FBB631761}</Project>
       <Name>IA.Weather.Infrastructure.Providers</Name>

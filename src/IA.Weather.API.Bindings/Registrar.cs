@@ -10,6 +10,8 @@ using IA.Weather.Infrastructure.Providers.Helpers;
 using IA.Weather.Infrastructure.Providers.Implementations;
 using IA.Weather.Infrastructure.Providers.Interfaces;
 using IA.Weather.API.Helpers;
+using IA.Weather.Domain.Calculators;
+using IA.Weather.Domain.Factories;
 
 namespace IA.Weather.API.Bindings
 {
@@ -24,6 +26,8 @@ namespace IA.Weather.API.Bindings
             container.Register<ICountriesService, CountriesService>(Lifestyle.Singleton);
 
             container.Register<ICitiesProvider, CitiesProviderX>(Lifestyle.Singleton);
+            container.Register<ITemperatureCalculator, TemperatureCalculator>(Lifestyle.Singleton);
+            container.Register<ITemperatureModelFactory, TemperatureModelFactory>(Lifestyle.Singleton);
 
             container.Register(() =>
             {
@@ -68,12 +72,12 @@ namespace IA.Weather.API.Bindings
             {
                 var apiKey = "openweathermap.org:apiKey".GetAppSetting(Required);
                 var apiUrl = "openweathermap.org:apiUrl".GetAppSetting(Required);
+                var factory = container.GetInstance<ITemperatureModelFactory>();
 
-                return new WeatherProviderOpenWeatherMap(apiKey, apiUrl);
+                return new WeatherProviderOpenWeatherMap(factory, apiKey, apiUrl);
 
             }, Lifestyle.Singleton);
 
-            container.Register<IWeatherProviderPhilly, WeatherProviderPhilly>(Lifestyle.Singleton);
         }
 
         private static void CountriesProviders(Container container)

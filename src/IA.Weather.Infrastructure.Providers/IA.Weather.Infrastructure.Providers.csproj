@@ -56,7 +56,6 @@
     <Compile Include="Implementations\CountriesProviderRestCountriesEu.cs" />
     <Compile Include="Implementations\WeatherProviderHttp.cs" />
     <Compile Include="Implementations\WeatherProviderOpenWeatherMap.cs" />
-    <Compile Include="Implementations\WeatherProviderPhilly.cs" />
     <Compile Include="Implementations\WeatherProviderX.cs" />
     <Compile Include="Interfaces\ICitiesProvider.cs" />
     <Compile Include="Interfaces\ICountriesProvider.cs" />

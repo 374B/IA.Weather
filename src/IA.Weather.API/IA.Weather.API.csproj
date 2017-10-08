@@ -93,7 +93,9 @@
     <Compile Include="Configuration\LogConfiguration.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Helpers\RouteProvider.cs" />
+    <Compile Include="Mappers\WeatherModelMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

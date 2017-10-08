@@ -15,6 +15,8 @@ namespace IA.Weather.Domain.Models
         /// <returns></returns>
         public static ErrorModel FromException(Exception ex, string errorMessage = null)
         {
+            if (ex == null) throw new ArgumentNullException(nameof(ex));
+
             errorMessage = errorMessage ?? ex.Message;
             return new ErrorModel(errorMessage, ex);
         }

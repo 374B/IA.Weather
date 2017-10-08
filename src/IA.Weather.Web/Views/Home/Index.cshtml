@@ -7,17 +7,23 @@
 @Scripts.Render("~/scripts/app.js")
 @Styles.Render("~/Content/font-awesome.css")
 
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #428bca; color: white; padding-top: 30px; padding-bottom:30px">
     <div style="float: left">
         <h1>Weather Service</h1>
     </div>
     <div style="float: right">
         <h1>
-            <i id="spinner" class="fa fa-spinner fa-spin hidden" style="font-size: 48px; color: black"></i>
+            <i id="spinner" class="fa fa-spinner fa-spin hidden" style="font-size: 48px; color: aliceblue"></i>
         </h1>
     </div>
-    <p style="clear:left" class="lead">Select a country, choose a city and finally choose a weather provider to get the weather.</p>
+    <br />
+    <br />
+    <div style="clear: both; width: 80%">
+        <hr style="border-color: aliceblue">
+        <p class="lead" style="color: aliceblue">Select a country, choose a city and finally choose a weather provider to get the weather.</p>
+    </div>
 </div>
+
 
 <div id="error" class="alert alert-danger" style="@(@Model.Errors.Any() ? "" : "display:none")">
     <strong>Service unavailable</strong> - Please try again later. The following errors occurred:
@@ -33,24 +39,22 @@
 
 <div id="container">
     <div class="row">
+
+        <!--Selection + action-->
         <div class="col-md-4">
-            <!--Country selection-->
-            <h2>Country</h2>
+            <h3>Country</h3>
             <p>
                 Select a country:
             </p>
             <select id="countriesDropDown" style="width: 100%"></select>
-            <!--City selection-->
-            <h2>City</h2>
+            <h3>City</h3>
             <div>
                 <p id="citiesText">
                     Please select a country first
                 </p>
                 <select id="citiesDropDown" style="width: 100%; display: none"></select>
             </div>
-        </div>
-        <div class="col-md-4">
-            <h2>Weather Service</h2>
+            <h3>Service</h3>
             <p>
                 Select a weather service:
             </p>
@@ -59,7 +63,46 @@
             <br />
             <a id="goButton" class="btn btn-default btn-primary disabled" style="max-width: 280px; width: 100%">Go!</a>
         </div>
-        <div class="col-md-4">
+
+        <!--Results-->
+        <div class="col-md-8">
+
+            <div id="resultErrorContainer" style="display: none">
+                <br />
+                <div class="alert alert-danger" >
+                    <strong>There was an error trying to load the weather. The message was:</strong>
+                    <br />
+                    <p id="resultErrorText"></p>
+                </div>
+            </div>
+
+            <div id="resultContainer" style="display: none">
+                <h2>
+                    Weather <small id="resultCountryText"></small><small>, </small> <small id="resultCityText"></small>
+                </h2>
+
+                <!--Tabs-->
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#overviewContainer">Overview</a></li>
+                    <li><a data-toggle="tab" href="#detailedContainer">Detailed</a></li>
+                </ul>
+
+                <div class="tab-content">
+                    <!--Overview tab-->
+                    <div id="overviewContainer" class="tab-pane fade in active">
+                        <h3 id="resultDescPrimaryText"></h3>
+                        <p id="resultDecSecondaryText"></p>
+                        <p>
+                            Current Temperature: <span id="resultCurrentTempText"></span>
+                        </p>
+                    </div>
+                    <!--Detailed tab-->
+                    <div id="detailedContainer" class="tab-pane fade">
+                        <table id="detailedTable" class="table table-striped" style="margin-top: -1px"></table>
+                    </div>
+                </div>
+
+            </div>
             <p id="resultText"></p>
         </div>
     </div>
