@@ -1,3 +1,5 @@
+If there are package errors you may need to run the following command in the package manager console: Update-Package -Reinstall
+
 The structure of the application is roughly as follows:
 
 	UI (.WEB project - MVC/JS)
@@ -11,6 +13,7 @@ There are two ways to run the API
 - SelfHost
 
 By default the Web application (front end) is configured to talk to the SelfHost API. The required projects for this should run automatically.
+If not just start IA.Weather.Web and IA.Weather.API.SelfHost and everything should work.
 
 When the app starts a Swagger page will also be launched (if running in debug).
 
