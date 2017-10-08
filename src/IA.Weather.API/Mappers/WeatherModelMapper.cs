@@ -17,7 +17,10 @@ namespace IA.Weather.API.Mappers
 
             res.MainDesc = model.Description1.UpperFirst();
             res.SecondaryDesc = model.Description2.UpperFirst();
-            res.CurrentTemp = $"{Math.Round(model.TempCurrent.DegreesCelsius):F}°C";
+
+            res.CurrentTemp = model.TempCurrent != null ?
+                model.TempCurrent.DegreesCelsius.ToTemperatureString('C')
+                : "Unknown";
 
             AddTemperatureModel(res.Props, "Current Temperature", model.TempCurrent);
             AddTemperatureModel(res.Props, "Min. Temperature", model.TempMin);
@@ -39,10 +42,8 @@ namespace IA.Weather.API.Mappers
                 return;
             }
 
-            var str = $"{Math.Round(model.DegreesCelsius):F}°C / {Math.Round(model.DegreesFahrenheit):F}°F";
+            var str = $"{model.DegreesCelsius.ToTemperatureString('C')} / {model.DegreesFahrenheit.ToTemperatureString('F')}";
             propsDict.Add(name, str);
-
-
 
         }
 

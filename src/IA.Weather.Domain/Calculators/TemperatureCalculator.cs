@@ -1,6 +1,5 @@
 ﻿namespace IA.Weather.Domain.Calculators
 {
-    //TODO: Test
     public interface ITemperatureCalculator
     {
         decimal FahrenheitToCelsius(decimal degreesFahrenehit);

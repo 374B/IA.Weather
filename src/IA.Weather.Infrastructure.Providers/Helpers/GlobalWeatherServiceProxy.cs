@@ -15,7 +15,6 @@ namespace IA.Weather.Infrastructure.Providers.Helpers
 
         public async Task<T> Invoke<T>(Func<GlobalWeatherServiceReference.GlobalWeatherSoapClient, Task<T>> method)
         {
-            //TODO: Basic ex handling
             var addr = new EndpointAddress(_endpointAddress);
             var binding = new BasicHttpBinding();
 

@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Serilog;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
 
@@ -10,9 +11,14 @@ namespace IA.Weather.Web
     {
         protected void Application_Start()
         {
+            var log = new LoggerConfiguration()
+                .ReadFrom.AppSettings()
+                .CreateLogger();
+
             var container = new Container();
 
             container.Register<IApiClient, ApiClient>(Lifestyle.Transient);
+            container.Register(() => Log.Logger, Lifestyle.Singleton);
 
             container.Verify();
 

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IA.Weather.API.DTO.Responses;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace IA.Weather.Web
 {
@@ -16,12 +17,14 @@ namespace IA.Weather.Web
 
     public class ApiClient : IApiClient
     {
+        private readonly ILogger _logger;
         private readonly string _hostUrl;
 
-        public ApiClient()
+        public ApiClient(ILogger logger)
         {
-            var key = "ia.weather.api:hosturl";
+            _logger = logger;
 
+            var key = "ia.weather.api:hosturl";
             _hostUrl = ConfigurationManager.AppSettings[key];
 
             if (string.IsNullOrWhiteSpace(_hostUrl)) throw new ConfigurationErrorsException($"Required app setting not found: {key}");
@@ -51,29 +54,34 @@ namespace IA.Weather.Web
 
         private async Task<T> GetResponse<T>(HttpRequestMessage msg)
         {
+            var requestLogger = _logger.ForContext("ApiClient - Request", Guid.NewGuid().ToString("D"));
+
             try
             {
-                //TODO: Log req start
-                return await GetResponseInner<T>(msg);
-                //TODO: Log req success
+                requestLogger.Information("ApiClient - Request start: Method: {method}, URL: {url}", msg.Method,
+                    msg.RequestUri);
+
+                return await GetResponseInner<T>(requestLogger, msg);
+
             }
             catch (Exception ex)
             {
+                requestLogger.Error(ex, "An exception occurred");
+
                 throw new Exception(
                     $"An exception occurred for request [{msg.Method}] '{msg.RequestUri}'. See inner ex for details",
                     ex);
             }
-            finally
-            {
-                //TODO: Log req end
-            }
         }
 
-        private async Task<T> GetResponseInner<T>(HttpRequestMessage msg)
+        private async Task<T> GetResponseInner<T>(ILogger requestLogger, HttpRequestMessage msg)
         {
             using (var httpClient = new HttpClient())
             {
                 var res = await httpClient.SendAsync(msg);
+
+                requestLogger.Information("ApiClient - Response received. Status codde: {statusCode}", res.StatusCode);
+                
                 res.EnsureSuccessStatusCode();
 
                 if (res.Content == null) throw new NullReferenceException("Content was null");
@@ -88,6 +96,7 @@ namespace IA.Weather.Web
                 }
                 catch (Exception ex)
                 {
+                    requestLogger.Error(ex, "An exception occurred during deserialization");
                     throw new Exception($"Could not deserialize response content into {typeof(T).Name}. See inner ex for details", ex);
                 }
             }

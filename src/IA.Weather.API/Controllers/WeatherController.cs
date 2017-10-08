@@ -7,6 +7,7 @@ using System.Web.Http;
 using IA.Weather.API.DTO.Responses;
 using IA.Weather.API.Helpers;
 using IA.Weather.API.Mappers;
+using IA.Weather.Domain.Models;
 using IA.Weather.Services.Contract.Interfaces;
 using Serilog;
 
@@ -63,21 +64,31 @@ namespace IA.Weather.API.Controllers
                return new Func<Task<KeyValuePair<string, WeatherResponse>>>(async () =>
                 {
                     var result = await x.GetByCity(country, city);
-                    var mapped = WeatherModelMapper.ToWeatherResponse(result);
-                    return new KeyValuePair<string, WeatherResponse>(x.Identifier, mapped);
+
+                    WeatherResponse res = null;
+                    if (!result.Errored)
+                        res = WeatherModelMapper.ToWeatherResponse(result);
+
+                    return new KeyValuePair<string, WeatherResponse>(x.Identifier, res);
                 })();
            });
 
             try
             {
                 var results = await Task.WhenAll(tasks);
-                var responseObj = new
-                {
-                    Results = results.Select(x => new
+
+                //TODO: Avoid dynamics, use proper models
+
+                var mapped = results.Where(x => x.Value != null)
+                    .Select(x => new
                     {
                         x.Key,
                         x.Value
-                    })
+                    });
+
+                var responseObj = new
+                {
+                    Results = mapped
                 };
 
                 return Ok(responseObj);

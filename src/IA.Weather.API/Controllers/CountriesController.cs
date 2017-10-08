@@ -26,8 +26,6 @@ namespace IA.Weather.API.Controllers
         [Route("countries")]
         public async Task<IHttpActionResult> GetAllCountries()
         {
-            //TODO: Ex handling
-
             var countries = await _countriesService.GetAllCountries();
 
             var res = new CountriesResponse

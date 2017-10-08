@@ -4,15 +4,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using IA.Weather.Web.Models;
+using Serilog;
 
 namespace IA.Weather.Web.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ILogger _logger;
         private readonly IApiClient _apiClient;
 
-        public HomeController(IApiClient apiClient)
+        public HomeController(
+            ILogger logger,
+            IApiClient apiClient)
         {
+            _logger = logger;
             _apiClient = apiClient;
         }
 
@@ -48,7 +53,7 @@ namespace IA.Weather.Web.Controllers
             }
             catch (Exception ex)
             {
-                //TODO: Log
+                _logger.Error(ex, "Could not get the list of countries. An exception occurred.");
                 viewModel.Errors.Add("Could not get the list of countries");
             }
 
@@ -73,7 +78,7 @@ namespace IA.Weather.Web.Controllers
             }
             catch (Exception ex)
             {
-                //TODO: Log
+                _logger.Error(ex, "Could not get the list of providers. An error occurred.");
                 viewModel.Errors.Add("Could not get the list of providers");
             }
         }
